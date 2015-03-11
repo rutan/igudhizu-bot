@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'ruboty/igudhizu'
+
+ENV['MONGOID_ENV'] ||= 'development'
+mongoid_path = ENV['MONGOID_CONFIG_PATH'] || File.expand_path('../../mongoid.yml', __FILE__)
+Mongoid.load!(mongoid_path)
+
+builder = Ruboty::Igudhizu::ParagraphBuilder.new
+[ARGV[0].to_i, 1].max.times { puts builder.build }

@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'ruboty/igudhizu'
+
+ENV['MONGOID_ENV'] ||= 'development'
+mongoid_path = ENV['MONGOID_CONFIG_PATH'] || File.expand_path('../../mongoid.yml', __FILE__)
+Mongoid.load!(mongoid_path)
+
+unless ARGV[0]
+  puts 'require filename'
+  exit 1
+end
+
+lines = File.read(ARGV[0]).split(/\r?\n/)
+lines.each_with_index do |text, i|
+  Ruboty::Igudhizu::Learner.new(text).learn
+  puts "#{i + 1} / #{lines.size}"
+end
+
