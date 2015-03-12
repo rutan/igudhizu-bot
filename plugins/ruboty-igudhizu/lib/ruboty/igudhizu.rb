@@ -1,8 +1,10 @@
 require 'ruboty/igudhizu/version'
+require 'ruboty/igudhizu/override'
 require 'ruboty/igudhizu/word'
 require 'ruboty/igudhizu/splitter'
 require 'ruboty/igudhizu/learner'
 require 'ruboty/igudhizu/paragraph_builder'
+require 'ruboty/igudhizu/following'
 
 require 'ruboty'
 
@@ -53,11 +55,14 @@ module Ruboty
       end
 
       def interval
-        (ENV['IGUDHIZU_INTERVAL'] || 30 * 60).to_i * 1.1
+        (ENV['IGUDHIZU_INTERVAL'] || 30 * 60).to_i * (1 + rand(10) / 100.0)
       end
 
       def generate
-        @builder.build
+        loop do
+          message = @builder.build.to_s
+          return message if message.size > 0 && message.size < 120
+        end
       end
 
       def mongoid_config_path
