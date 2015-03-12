@@ -1,1 +1,1 @@
-web: bundle exec ruboty
+worker: bundle exec ruboty
