@@ -3,9 +3,6 @@
 
 require 'ruboty/igudhizu'
 
-ENV['MONGOID_ENV'] ||= 'development'
-mongoid_path = ENV['MONGOID_CONFIG_PATH'] || File.expand_path('../../mongoid.yml', __FILE__)
-Mongoid.load!(mongoid_path)
-
+Ruboty::Igudhizu.init
 builder = Ruboty::Igudhizu::ParagraphBuilder.new
-[ARGV[0].to_i, 1].max.times { puts builder.build }
+[ARGV[0].to_i, 1].max.times { puts builder.build(1..120) }

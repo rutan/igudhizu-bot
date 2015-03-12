@@ -1,4 +1,3 @@
-
 require 'ruboty'
 
 module Ruboty

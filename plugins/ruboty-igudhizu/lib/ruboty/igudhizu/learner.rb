@@ -18,6 +18,7 @@ module Ruboty
         true
       end
 
+      # TODO: 無駄が多いのでなんとかしたいなぁ
       def learn
         return unless lernable?
         @words.clear
@@ -48,6 +49,8 @@ module Ruboty
           w1.save
         end
       end
+
+      private
 
       def pair_word(s1, s2)
         @words[s1] ||= []
