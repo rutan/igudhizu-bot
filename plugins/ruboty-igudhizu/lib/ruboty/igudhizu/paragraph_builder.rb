@@ -11,9 +11,19 @@ module Ruboty
 
       def build(range = nil)
         return '' unless @start
+        paragraph = generate_base_paragraph(@start, range)
 
+        paragraph.gsub!(/\A[^（]+）/, '') # 閉じカッコが先に出てきたら消す
+        paragraph.gsub!('（）（', '（') # カッコ使いすぎでしょ
+
+        paragraph
+      end
+
+      private
+
+      def generate_base_paragraph(word, range)
         loop do
-          text = generate_by(@start)
+          text = generate_by(word)
           return text unless range
           case text.size
           when range
@@ -21,8 +31,6 @@ module Ruboty
           end
         end
       end
-
-      private
 
       def generate_by(word)
         words = []
