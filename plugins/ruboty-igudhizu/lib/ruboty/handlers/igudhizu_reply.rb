@@ -15,7 +15,7 @@ module Ruboty
       end
 
       def igudhizu_reply(message)
-        message.reply("@#{message.from} #{@builder.build(1..120)}")
+        message.reply("@#{message.from} #{@builder.build(1..80)}")
       rescue => e
         puts e.inspect
         puts e.backtrace

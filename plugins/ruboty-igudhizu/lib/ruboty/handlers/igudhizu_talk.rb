@@ -11,7 +11,7 @@ module Ruboty
       end
 
       def random_say
-        robot.say(body: @builder.build(1..120), original: {})
+        robot.say(body: @builder.build(1..80), original: {})
       rescue => e
         puts e.inspect
         puts e.backtrace
