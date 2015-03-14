@@ -12,7 +12,7 @@ module Ruboty
 
       def igudhizu_following(message)
         return unless message.from == master_name
-        puts '記憶するか'
+        puts "記録: #{message.body}"
 
         Ruboty::Igudhizu::Learner.new(message.body).learn
       rescue => e
