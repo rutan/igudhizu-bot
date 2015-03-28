@@ -15,7 +15,7 @@ module Ruboty
       end
 
       def igudhizu_reply(message)
-        message.reply("@#{message.from} #{@builder.build(1..80)}")
+        message.reply("@#{message.from} #{@builder.build(1..80)}") unless message.original[:retweeted]
       rescue => e
         puts e.inspect
         puts e.backtrace
