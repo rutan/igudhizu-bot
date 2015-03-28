@@ -15,7 +15,11 @@ module Ruboty
       end
 
       def igudhizu_reply(message)
-        message.reply("@#{message.from} #{@builder.build(1..80)}") unless message.original[:retweeted]
+        # メッセージから名詞をテキトーに1個取り出す
+        reply_message = message.body.gsub(/\s?@[A-Za-z0-9]+\s?/, '')
+        splitter = Ruboty::Igudhizu::Splitter.new(reply_message)
+        @builder.start = splitter.nouns.sample.to_s
+        message.reply("#{message.from ? "@#{message.from} " : ''}#{@builder.build(1..80)}") unless message.original[:retweeted]
       rescue => e
         puts e.inspect
         puts e.backtrace

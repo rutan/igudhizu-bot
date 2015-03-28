@@ -8,6 +8,7 @@ module Ruboty
       def initialize(text)
         @text = text.to_s
         @words = []
+        @nouns = []
         step_url
         step_remove_retweet
         step_remove_hash
@@ -15,6 +16,7 @@ module Ruboty
       end
       attr_reader :text
       attr_reader :words
+      attr_reader :nouns
 
       # URL付きの場合はURL以降のみ残す
       def step_url
@@ -35,6 +37,8 @@ module Ruboty
       # 形態素解析する
       def step_morphological
         @words.clear
+        @nouns.clear
+
         join_word = []
         tagger.parse(@text).mincost_path.each do |node|
           word = node.word
@@ -43,6 +47,7 @@ module Ruboty
           when 'BOS/EOS'
             if join_word.size > 0
               @words << join_word.join('')
+              @nouns << join_word.join('')
               join_word.clear
             end
             @words << ''
@@ -51,6 +56,7 @@ module Ruboty
           else
             if join_word.size > 0
               @words << join_word.join('')
+              @nouns << join_word.join('')
               join_word.clear
             end
             @words << word.surface
