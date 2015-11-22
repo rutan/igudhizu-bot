@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'mongoid'
+Mongoid.logger.level = Logger::INFO
 
 module Ruboty
   module Igudhizu

@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'ruboty', '~> 1.2.1'
-  spec.add_dependency 'mongoid', '~> 4.0.2'
+  spec.add_dependency 'mongoid', '~> 5.0.0'
   spec.add_dependency 'okura', '~> 0.0.1'
 
   spec.add_development_dependency 'pry'
