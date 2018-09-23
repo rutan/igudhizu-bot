@@ -46,8 +46,16 @@ class CheapTwitter
       application = app.new
 
       @ticker = Repp::Ticker.task(application) do |res|
-        next unless res.first
-        client.update(res.first)
+        next if res.first.nil? || res.first.to_s.empty?
+        begin
+          in_reply_to_status_id = res.last && res.last[:in_reply_to_status_id]
+          @client.update(
+            res.first,
+            in_reply_to_status_id: in_reply_to_status_id
+          )
+        rescue => e
+          puts e.inspect
+        end
       end
       @ticker.run!
 

@@ -10,5 +10,10 @@ end
 
 # 定期ツイート
 cron '0 * * * *' do
-  Models::ParagraphBuilder.build
+  begin
+    Models::ParagraphBuilder.build
+  rescue => e
+    puts e.inspect
+    puts e.backtrace
+  end
 end
