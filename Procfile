@@ -1,1 +1,1 @@
-worker: bundle exec ruboty
+worker: bundle exec ruby ./lib/application.rb

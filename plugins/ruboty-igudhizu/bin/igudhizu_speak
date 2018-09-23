@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-# encoding: utf-8
-
-require 'ruboty/igudhizu'
-
-Ruboty::Igudhizu.init
-builder = Ruboty::Igudhizu::ParagraphBuilder.new
-[ARGV[0].to_i, 1].max.times { puts builder.build(1..((ARGV[1] || 120).to_i)) }
-
