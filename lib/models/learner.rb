@@ -19,7 +19,6 @@ module Models
 
       ActiveRecord::Base.transaction do
         words = parse_words.map do |w|
-          puts w.inspect
           next if w.blank? || w.first.blank?
           Word.find_or_create_by!(content: w.first, word_type: w.last)
         end.compact
