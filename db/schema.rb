@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(version: 2) do
 
   create_table "words", force: :cascade do |t|
     t.string "content", limit: 64, null: false
+    t.string "word_type", limit: 16, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["content"], name: "index_words_on_content", unique: true
+    t.index ["content", "word_type"], name: "index_words_on_content_and_word_type", unique: true
   end
 
 end

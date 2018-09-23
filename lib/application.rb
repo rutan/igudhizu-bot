@@ -10,5 +10,5 @@ end
 
 # 定期ツイート
 cron '0 * * * *' do
-  Models::ParagraphBuilder.new.build
+  Models::ParagraphBuilder.build
 end

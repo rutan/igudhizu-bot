@@ -24,6 +24,11 @@ module Models
         empty_query = where(body_id: body_id.try(:id) || body_id)
         empty_query.offset(rand(empty_query.count)).first
       end
+
+      def random_pick_by_foot(foot_id = nil)
+        empty_query = where(foot_id: foot_id.try(:id) || foot_id)
+        empty_query.offset(rand(empty_query.count)).first
+      end
     end
   end
 end

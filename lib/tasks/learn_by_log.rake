@@ -46,10 +46,15 @@ namespace :learn_by_log do
     tweets = JSON.parse(File.read("#{FETCH_OUT_DIR}/result.json"))
     tweets.each do |tweet|
       learner = Models::Learner.new(tweet)
-      if learner.learn
-        puts "[success] #{tweet}"
-      else
-        puts "[skip] #{tweet}"
+      begin
+        if learner.learn
+          puts "[success] #{tweet}"
+        else
+          puts "[skip] #{tweet}"
+        end
+      rescue => e
+        puts "[error] #{tweet}"
+        puts e.inspect
       end
     end
   end

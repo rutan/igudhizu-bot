@@ -19,8 +19,9 @@ module Models
 
       ActiveRecord::Base.transaction do
         words = parse_words.map do |w|
-          next if w.blank?
-          Word.find_or_create_by!(content: w)
+          puts w.inspect
+          next if w.blank? || w.first.blank?
+          Word.find_or_create_by!(content: w.first, word_type: w.last)
         end.compact
 
         (words.size + 2).times do |i|
@@ -63,29 +64,33 @@ module Models
       end
 
       words = []
+      join_type = nil
       join_word = []
+
       tagger.parse(message).mincost_path.each do |node|
         word = node.word
         types = word.left.text.split(',')
+
+        if join_type && types.first != join_type
+          words << [join_word.join(''), join_type]
+          join_word.clear
+          join_type = nil
+        end
+
         case types.first
         when 'BOS/EOS'
-          if join_word.size > 0
-            words << join_word.join('')
-            join_word.clear
-          end
-          words << ''
-        when '名詞'
+          words << ['', types.first]
+        when '名詞', '記号'
+          join_type = types.first
           join_word << word.surface
+        when '助詞'
+          words << [word.surface, "#{types.first}:#{types.second}"]
         else
-          if join_word.size > 0
-            words << join_word.join('')
-            join_word.clear
-          end
-          words << word.surface
+          words << [word.surface, types.first]
         end
       end
 
-      words.insert(-2, suffix) if suffix
+      words.insert(-2, [suffix, 'アヅマ語尾']) if suffix
 
       words
     end
