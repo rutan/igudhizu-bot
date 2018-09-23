@@ -6,14 +6,21 @@ set :name, 'igudhizu_bot'
 set :service, 'cheap_twitter'
 
 helpers do
+  def generate_talk
+    begin
+      Models::ParagraphBuilder.build
+    rescue => e
+      puts e.inspect
+      puts e.backtrace
+    end
+  end
+end
+
+on /.+/ do
+  generate_talk
 end
 
 # 定期ツイート
 cron '0 * * * *' do
-  begin
-    Models::ParagraphBuilder.build
-  rescue => e
-    puts e.inspect
-    puts e.backtrace
-  end
+  generate_talk
 end
