@@ -1,0 +1,35 @@
+{
+    "name": "igudhizu-bot",
+    "description": "",
+    "repository": "https://github.com/rutan/igudhizu-bot",
+    "addons": ["heroku-postgresql:hobby-dev"],
+    "env": {
+        "RAILS_ENV": "production",
+        "TWITTER_CONSUMER_KEY": {
+            "description": "Twitter Application Key",
+            "value": "",
+            "required": true
+        },
+        "TWITTER_CONSUMER_SECRET": {
+            "description": "Twitter Application SecretKey",
+            "value": "",
+            "required": true
+        },
+        "TWITTER_ACCESS_TOKEN": {
+            "description": "Twitter Access Key",
+            "value": "",
+            "required": true
+        },
+        "TWITTER_ACCESS_TOKEN_SECRET": {
+            "description": "Twitter Access SecretKey",
+            "value": "",
+            "required": true
+        }
+    },
+    "scripts": {
+        "postdeploy": "bundle exec rake db:migrate",
+        "dokku": {
+            "predeploy": "bundle exec rake db:migrate"
+        }
+    }
+}
