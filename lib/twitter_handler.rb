@@ -76,7 +76,7 @@ class CheapTwitter
       application = app.new
 
       @ticker = Repp::Ticker.task(application) do |res|
-        Utils.post_to_twitter(client, res)
+        Utils.post_to_twitter(@client, res)
       end
       @ticker.run!
 
