@@ -15,6 +15,7 @@ namespace :learn_by_log do
   task :fetch, ['page'] => :environment do |_, args|
     max_page = (args.page || 1).to_i
 
+    FileUtils.remove_entry_secure(FETCH_OUT_DIR) if File.exists?(FETCH_OUT_DIR)
     FileUtils.mkdir_p(FETCH_OUT_DIR)
     max_page.times do |i|
       page = i + 1
