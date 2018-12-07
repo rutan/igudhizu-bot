@@ -1,7 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/dependencies'
-require_relative './initializer/activerecord.rb'
 Time.zone = 'Tokyo'
 
 # auto loader

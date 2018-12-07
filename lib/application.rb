@@ -1,6 +1,9 @@
 require_relative './bootstrap.rb'
 require_relative './twitter_handler.rb'
 require 'mobb'
+require 'mobb/activerecord'
+
+set :database_file, File.expand_path('../../db/config.yml', __FILE__)
 
 set :name, 'igudhizu_bot'
 set :service, 'cheap_twitter'

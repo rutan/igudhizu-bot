@@ -7,10 +7,7 @@ FETCH_OUT_DIR = File.expand_path('../../../tmp/fetch-log', __FILE__)
 TWILOG_URL = 'https://twilog.org'
 ACCOUNT_NAME = 'igudhizu'
 
-puts FETCH_OUT_DIR
-
 namespace :learn_by_log do
-
   desc 'Twilogからログデータを取得する'
   task :fetch, ['page'] => :environment do |_, args|
     max_page = (args.page || 1).to_i
