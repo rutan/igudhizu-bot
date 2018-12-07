@@ -14,8 +14,11 @@ module Models
       last_ids = chain_bottom(keyword)
       first_ids.pop if first_ids.present? && last_ids.present?
 
-      words = (first_ids + last_ids).map { |id| Word.find(id) }
-      words.map(&:content).join('')
+      words = Word.find(first_ids + last_ids)
+      (first_ids + last_ids)
+        .map { |id| words.find { |w| w.id == id } }
+        .map(&:content)
+        .join('')
     end
 
     private
