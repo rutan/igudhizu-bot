@@ -23,7 +23,7 @@ end
 
 on /(.+)/ do |word|
   begin
-    keywords = Utils::Tokenizer.new.parse(word.strip)
+    keywords = Utils::Tokenizer.new.parse(word.gsub(/@[^\s]+/, '').strip)
                  .select {|n| n.last == '名詞'}
                  .map(&:first)
                  .compact
