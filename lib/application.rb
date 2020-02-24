@@ -9,8 +9,10 @@ set :name, 'igudhizu_bot'
 set :service, 'cheap_twitter'
 
 helpers do
-  def generate_talk
+  def generate_talk(keywords = nil)
     begin
+      Models::ParagraphBuilder.build(keyword: keywords)
+    rescue ActiveRecord::RecordNotFound
       Models::ParagraphBuilder.build
     rescue => e
       puts e.inspect
@@ -19,8 +21,20 @@ helpers do
   end
 end
 
-on /.+/ do
-  generate_talk
+on /(.+)/ do |word|
+  begin
+    keywords = Utils::Tokenizer.new.parse(word.strip)
+                 .select {|n| n.last == '名詞'}
+                 .map(&:first)
+                 .compact
+                 .uniq
+                 .shuffle
+    generate_talk(keywords)
+  rescue => e
+    puts e.inspect
+    puts e.backtrace
+    generate_talk
+  end
 end
 
 # 定期ツイート

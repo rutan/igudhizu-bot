@@ -5,6 +5,7 @@ module Models
     def build(keyword: nil)
       case keyword
       when String
+      when Array
         keyword = Word.find_by(content: keyword)&.id || (raise ActiveRecord::RecordNotFound)
       when Word
         keyword = keyword.id
