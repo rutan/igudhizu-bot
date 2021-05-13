@@ -36,7 +36,7 @@ class IgudhizuBot < Mobb::Base
   end
 
   # 定期ツイート
-  cron '0 * * * *' do
-    generate_talk
+  cron '*/10 * * * *' do
+    generate_talk if rand < 0.1
   end
 end
