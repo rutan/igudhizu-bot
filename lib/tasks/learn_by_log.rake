@@ -42,10 +42,10 @@ namespace :learn_by_log do
   desc '整形済みデータから学習を実施する'
   task :learn => :environment do
     tweets = JSON.parse(File.read("#{FETCH_OUT_DIR}/result.json"))
+    learner = Models::Learner.new
     tweets.each do |tweet|
-      learner = Models::Learner.new(tweet)
       begin
-        if learner.learn
+        if learner.learn(tweet)
           puts "[success] #{tweet}"
         else
           puts "[skip] #{tweet}"

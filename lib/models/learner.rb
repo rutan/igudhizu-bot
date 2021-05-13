@@ -2,22 +2,24 @@ module Models
   class Learner
     DIC_DIR = File.expand_path('../../../okura-dic', __FILE__)
 
-    def initialize(message)
-      @message = message.to_s
-      @message = @message.sub(/^@[^\s]+\s*/, '') # 先頭のリプライを削除
-      @message = @message.sub('#', '') # ハッシュタグを無効化（迷惑なので）
+    def initialize
+      @tokenizer = ::Utils::Tokenizer.new
     end
 
-    def learn
-      return false if bot?
-      return false if repry?
-      return false if retweet?
-      return false if include_url?
+    attr_reader :tokenizer
 
-      tokenizer = ::Utils::Tokenizer.new
+    def learn(message)
+      message = message.to_s
+      message = message.sub(/^@[^\s]+\s*/, '') # 先頭のリプライを削除
+      message = message.sub('#', '') # ハッシュタグを無効化（迷惑なので）
+
+      return false if bot?(message)
+      return false if repry?(message)
+      return false if retweet?(message)
+      return false if include_url?(message)
 
       ActiveRecord::Base.transaction do
-        words = tokenizer.parse(@message).map do |w|
+        words = tokenizer.parse(message).map do |w|
           next if w.blank? || w.first.blank?
           Word.find_or_create_by!(content: w.first, word_type: w.last)
         end.compact
@@ -35,21 +37,21 @@ module Models
 
     private
 
-    def bot?
-      @message.include?('のポスト数：') ||
-        @message.include?('参戦ID参加者募集')
+    def bot?(message)
+      message.include?('のポスト数：') ||
+        message.include?('参戦ID参加者募集')
     end
 
-    def repry?
-      !!@message.match(/@[^\s]+/)
+    def repry?(message)
+      !!message.match(/@[^\s]+/)
     end
 
-    def retweet?
-      !!@message.match(/\s+(RT|QT)\s+/)
+    def retweet?(message)
+      !!message.match(/\s+(RT|QT)\s+/)
     end
 
-    def include_url?
-      !!@message.match(/https?:/)
+    def include_url?(message)
+      !!message.match(/https?:/)
     end
   end
 end
