@@ -36,7 +36,8 @@ module Models
     private
 
     def bot?
-      !!@message.include?('のポスト数：')
+      @message.include?('のポスト数：') ||
+        @message.include?('参戦ID参加者募集')
     end
 
     def repry?
