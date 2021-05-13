@@ -1,1 +1,1 @@
-worker: bundle exec ruby ./lib/application.rb
+worker: bundle exec ruby ./bin/igudhizu_bot
