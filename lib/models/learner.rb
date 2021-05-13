@@ -17,7 +17,7 @@ module Models
       tokenizer = ::Utils::Tokenizer.new
 
       ActiveRecord::Base.transaction do
-        words = tokenizer.parse_words.map do |w|
+        words = tokenizer.parse(@message).map do |w|
           next if w.blank? || w.first.blank?
           Word.find_or_create_by!(content: w.first, word_type: w.last)
         end.compact
